@@ -1,13 +1,6 @@
 import Layout from "../layout/Layout";
 import ExampleCard from "../cards/ExampleCard";
-import { ReactNode } from "react";
-
-export type Example = {
-    title: string;
-    css: string;
-    tailwind: string;
-    preview: ReactNode;
-};
+import type { Example } from "../../types/docs";
 
 type DocsPageProps = {
     title: string;
@@ -23,15 +16,60 @@ export default function DocsPage({
     return (
         <Layout>
             <section>
-                <h1 className="text-5xl font-black">
-                    {title}
-                </h1>
+                <header className="mb-14 rounded-3xl border border-border bg-surface p-10">
+                    <h1 className="text-5xl font-black text-foreground">
+                        {title}
+                    </h1>
 
-                <p className="mt-5 max-w-3xl text-lg text-zinc-400">
-                    {description}
-                </p>
+                    <p className="mt-5 max-w-3xl text-lg text-muted">
+                        {description}
+                    </p>
 
-                <div className="mt-12 space-y-10">
+                    <div className="mt-10 flex flex-wrap gap-4">
+                        <div className="rounded-xl border border-border bg-background px-5 py-3">
+                            <p className="text-sm text-muted">
+                                Examples
+                            </p>
+
+                            <p className="text-2xl font-bold text-foreground">
+                                {examples.length}
+                            </p>
+                        </div>
+
+                        <div className="rounded-xl border border-border bg-background px-5 py-3">
+                            <p className="text-sm text-muted">
+                                Beginner
+                            </p>
+
+                            <p className="text-2xl font-bold text-foreground">
+                                {
+                                    examples.filter(
+                                        (example) =>
+                                            example.difficulty === "Beginner"
+                                    ).length
+                                }
+                            </p>
+                        </div>
+
+                        <div className="rounded-xl border border-border bg-background px-5 py-3">
+                            <p className="text-sm text-muted">
+                                Tags
+                            </p>
+
+                            <p className="text-2xl font-bold text-foreground">
+                                {
+                                    new Set(
+                                        examples.flatMap(
+                                            (example) => example.tags
+                                        )
+                                    ).size
+                                }
+                            </p>
+                        </div>
+                    </div>
+                </header>
+
+                <div className="space-y-10">
                     {examples.map((example) => (
                         <ExampleCard
                             key={example.id}
