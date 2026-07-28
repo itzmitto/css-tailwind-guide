@@ -1,3 +1,5 @@
+import CopyButton from "../ui/CopyButton";
+
 type ExampleCardProps = {
     title: string;
     css: string;
@@ -20,9 +22,13 @@ export default function ExampleCard({
                     CSS
                 </p>
 
-                <pre className="rounded-lg bg-zinc-950 p-4 text-blue-400 overflow-x-auto">
-                    <code>{css}</code>
-                </pre>
+                <div className="space-y-3">
+                    <pre className="overflow-x-auto rounded-lg bg-zinc-950 p-4 text-blue-400">
+                        <code>{css}</code>
+                    </pre>
+
+                    <CopyButton text={css} />
+                </div>
             </div>
 
             <div className="mt-6">
@@ -30,9 +36,13 @@ export default function ExampleCard({
                     Tailwind
                 </p>
 
-                <pre className="rounded-lg bg-zinc-950 p-4 text-green-400 overflow-x-auto">
-                    <code>{tailwind}</code>
-                </pre>
+                <div className="space-y-3">
+                    <pre className="overflow-x-auto rounded-lg bg-zinc-950 p-4 text-green-400">
+                        <code>{tailwind}</code>
+                    </pre>
+
+                    <CopyButton text={tailwind} />
+                </div>
             </div>
 
             <div className="mt-6">
