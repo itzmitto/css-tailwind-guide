@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Colors from "./pages/Colors";
 import Flexbox from "./pages/Flexbox";
+import PlaygroundPage from "./pages/Playground";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route
           path="/flexbox" element={<Flexbox />} />
       </Routes>
+      <Route path="/playground" element={<PlaygroundPage />} />
     </BrowserRouter>
   );
 }

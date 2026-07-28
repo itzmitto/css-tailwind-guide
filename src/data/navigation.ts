@@ -6,6 +6,10 @@ export const navigation = [
                 name: "Home",
                 path: "/",
             },
+            {
+                name: "Playground",
+                path: "/playground",
+            },
         ],
     },
     {
