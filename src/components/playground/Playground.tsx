@@ -1,28 +1,6 @@
 import { useMemo, useState } from "react";
 import CopyButton from "../ui/CopyButton";
-
-const mappings: Record<string, string> = {
-    "display: flex": "flex",
-    "display:flex": "flex",
-
-    "justify-content: center": "justify-center",
-    "justify-content:center": "justify-center",
-
-    "align-items: center": "items-center",
-    "align-items:center": "items-center",
-
-    "flex-direction: column": "flex-col",
-    "flex-direction:column": "flex-col",
-
-    "flex-wrap: wrap": "flex-wrap",
-    "flex-wrap:wrap": "flex-wrap",
-
-    "text-align: center": "text-center",
-    "text-align:center": "text-center",
-
-    "font-weight: bold": "font-bold",
-    "font-weight:bold": "font-bold",
-};
+import { cssMappings } from "../../data/playground/mappings";
 
 export default function Playground() {
     const [css, setCss] = useState("");
@@ -34,7 +12,7 @@ export default function Playground() {
             .filter(Boolean);
 
         return lines
-            .map((line) => mappings[line] ?? `❌ Unknown: ${line}`)
+            .map((line) => cssMappings[line] ?? `❌ Unknown: ${line}`)
             .join("\n");
     }, [css]);
 
@@ -57,9 +35,9 @@ export default function Playground() {
                     <textarea
                         value={css}
                         onChange={(e) => setCss(e.target.value)}
-                        placeholder={`display: flex;
-justify-content: center;
-align-items: center;`}
+                        placeholder={`display:flex;
+justify-content:center;
+align-items:center;`}
                         className="h-96 w-full rounded-2xl border border-border bg-background p-6 font-mono outline-none"
                     />
                 </div>
