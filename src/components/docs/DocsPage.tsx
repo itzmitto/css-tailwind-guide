@@ -34,10 +34,14 @@ export default function DocsPage({
                 <div className="mt-12 space-y-10">
                     {examples.map((example) => (
                         <ExampleCard
-                            key={example.title}
+                            key={example.id}
                             title={example.title}
+                            description={example.description}
                             css={example.css}
                             tailwind={example.tailwind}
+                            difficulty={example.difficulty}
+                            tags={example.tags}
+                            browserSupport={example.browserSupport}
                         >
                             {example.preview}
                         </ExampleCard>

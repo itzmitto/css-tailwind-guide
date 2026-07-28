@@ -1,4 +1,4 @@
-import { DocsSection } from "../../types/docs";
+import type { DocsSection } from "../../types/docs";
 
 export const flexbox: DocsSection = {
     title: "Flexbox",
