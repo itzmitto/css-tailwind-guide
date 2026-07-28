@@ -9,6 +9,7 @@ import { cssMappings } from "../../data/playground/mappings";
 import { normalizeCss } from "../../utils/normalizeCss";
 import { parseCss } from "../../utils/parseCss";
 import { useSuggestions } from "../../hooks/useSuggestions";
+import { convertCss } from "../../utils/convertCss";
 
 export default function Playground() {
     const [css, setCss] = useState("");
@@ -29,7 +30,12 @@ export default function Playground() {
 
     const classes = useMemo(() => {
         return lines
-            .map((line) => cssMappings[normalizeCss(line)])
+            .map((line) => {
+                return (
+                    cssMappings[normalizeCss(line)] ??
+                    convertCss(line)
+                );
+            })
             .filter(Boolean);
     }, [lines]);
 
@@ -127,12 +133,11 @@ flex-direction:column;`}
                                                     suggestion
                                                 )
                                             }
-                                            className={`block w-full border-b border-border px-4 py-3 text-left font-mono transition last:border-b-0 ${
-                                                index ===
+                                            className={`block w-full border-b border-border px-4 py-3 text-left font-mono transition last:border-b-0 ${index ===
                                                 selectedSuggestion
-                                                    ? "bg-primary text-white"
-                                                    : "hover:bg-surface"
-                                            }`}
+                                                ? "bg-primary text-white"
+                                                : "hover:bg-surface"
+                                                }`}
                                         >
                                             {suggestion}
                                         </button>
