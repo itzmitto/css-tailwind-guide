@@ -1,4 +1,9 @@
-import { useMemo, useState } from "react";
+import {
+    KeyboardEvent,
+    useEffect,
+    useMemo,
+    useState,
+} from "react";
 import CopyButton from "../ui/CopyButton";
 import { cssMappings } from "../../data/playground/mappings";
 import { normalizeCss } from "../../utils/normalizeCss";
@@ -7,10 +12,16 @@ import { useSuggestions } from "../../hooks/useSuggestions";
 
 export default function Playground() {
     const [css, setCss] = useState("");
+    const [selectedSuggestion, setSelectedSuggestion] = useState(0);
+    const [showSuggestions, setShowSuggestions] = useState(true);
 
     const suggestions = useSuggestions(
         css.split(";").pop() ?? ""
     );
+
+    useEffect(() => {
+        setSelectedSuggestion(0);
+    }, [suggestions]);
 
     const lines = useMemo(() => {
         return parseCss(css);
@@ -28,6 +39,47 @@ export default function Playground() {
         const parts = css.split(";");
         parts[parts.length - 1] = suggestion;
         setCss(parts.join(";"));
+        setShowSuggestions(false);
+    }
+
+    function handleKeyDown(
+        e: KeyboardEvent<HTMLTextAreaElement>
+    ) {
+        if (!showSuggestions || suggestions.length === 0) {
+            return;
+        }
+
+        switch (e.key) {
+            case "ArrowDown":
+                e.preventDefault();
+
+                setSelectedSuggestion((prev) =>
+                    prev < suggestions.length - 1
+                        ? prev + 1
+                        : prev
+                );
+                break;
+
+            case "ArrowUp":
+                e.preventDefault();
+
+                setSelectedSuggestion((prev) =>
+                    prev > 0 ? prev - 1 : 0
+                );
+                break;
+
+            case "Enter":
+                e.preventDefault();
+
+                handleSuggestionClick(
+                    suggestions[selectedSuggestion]
+                );
+                break;
+
+            case "Escape":
+                setShowSuggestions(false);
+                break;
+        }
     }
 
     return (
@@ -37,18 +89,24 @@ export default function Playground() {
             </h1>
 
             <p className="mt-4 text-lg text-muted">
-                Type CSS properties and instantly see the matching Tailwind utilities.
+                Type CSS properties and instantly see the matching
+                Tailwind utilities.
             </p>
 
             <div className="mt-10 grid gap-8 xl:grid-cols-3">
-                <div>
+                <div className="relative">
                     <h2 className="mb-4 text-xl font-semibold">
                         CSS
                     </h2>
 
                     <textarea
                         value={css}
-                        onChange={(e) => setCss(e.target.value)}
+                        onChange={(e) => {
+                            setCss(e.target.value);
+                            setShowSuggestions(true);
+                        }}
+                        onFocus={() => setShowSuggestions(true)}
+                        onKeyDown={handleKeyDown}
                         placeholder={`display:flex;
 justify-content:center;
 align-items:center;
@@ -56,22 +114,32 @@ flex-direction:column;`}
                         className="h-96 w-full rounded-2xl border border-border bg-background p-6 font-mono outline-none"
                     />
 
-                    {suggestions.length > 0 && (
-                        <div className="mt-4 overflow-hidden rounded-2xl border border-border bg-background">
-                            {suggestions.map((suggestion) => (
-                                <button
-                                    key={suggestion}
-                                    type="button"
-                                    onClick={() =>
-                                        handleSuggestionClick(suggestion)
-                                    }
-                                    className="block w-full border-b border-border px-4 py-3 text-left font-mono transition hover:bg-surface last:border-b-0"
-                                >
-                                    {suggestion}
-                                </button>
-                            ))}
-                        </div>
-                    )}
+                    {showSuggestions &&
+                        suggestions.length > 0 && (
+                            <div className="absolute left-0 right-0 mt-2 overflow-hidden rounded-2xl border border-border bg-background shadow-lg">
+                                {suggestions.map(
+                                    (suggestion, index) => (
+                                        <button
+                                            key={suggestion}
+                                            type="button"
+                                            onClick={() =>
+                                                handleSuggestionClick(
+                                                    suggestion
+                                                )
+                                            }
+                                            className={`block w-full border-b border-border px-4 py-3 text-left font-mono transition last:border-b-0 ${
+                                                index ===
+                                                selectedSuggestion
+                                                    ? "bg-primary text-white"
+                                                    : "hover:bg-surface"
+                                            }`}
+                                        >
+                                            {suggestion}
+                                        </button>
+                                    )
+                                )}
+                            </div>
+                        )}
                 </div>
 
                 <div>
