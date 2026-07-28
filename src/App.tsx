@@ -10,10 +10,12 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/colors" element={<Colors />} />
+        <Route path="/flexbox" element={<Flexbox />} />
         <Route
-          path="/flexbox" element={<Flexbox />} />
+          path="/playground"
+          element={<PlaygroundPage />}
+        />
       </Routes>
-      <Route path="/playground" element={<PlaygroundPage />} />
     </BrowserRouter>
   );
 }

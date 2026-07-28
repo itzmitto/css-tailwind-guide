@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import CopyButton from "../ui/CopyButton";
 import { cssMappings } from "../../data/playground/mappings";
+import { normalizeCss } from "../../utils/normalizeCss";
 
 export default function Playground() {
     const [css, setCss] = useState("");
