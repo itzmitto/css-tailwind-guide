@@ -1,5 +1,7 @@
 import { ReactNode } from "react";
 import CopyButton from "../ui/CopyButton";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 type ExampleCardProps = {
     title: string;
@@ -25,10 +27,19 @@ export default function ExampleCard({
                     <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-zinc-500">
                         CSS
                     </p>
-
-                    <pre className="overflow-x-auto rounded-xl bg-zinc-950 p-5 text-blue-400">
-                        <code>{css}</code>
-                    </pre>
+                    <SyntaxHighlighter
+                        language="css"
+                        style={oneDark}
+                        customStyle={{
+                            margin: 0,
+                            borderRadius: "0.75rem",
+                            padding: "1.25rem",
+                            background: "#09090b",
+                            fontSize: "14px",
+                        }}
+                    >
+                        {css}
+                    </SyntaxHighlighter>
 
                     <div className="mt-4">
                         <CopyButton text={css} />
@@ -40,9 +51,19 @@ export default function ExampleCard({
                         Tailwind
                     </p>
 
-                    <pre className="overflow-x-auto rounded-xl bg-zinc-950 p-5 text-green-400">
-                        <code>{tailwind}</code>
-                    </pre>
+                    <SyntaxHighlighter
+                        language="html"
+                        style={oneDark}
+                        customStyle={{
+                            margin: 0,
+                            borderRadius: "0.75rem",
+                            padding: "1.25rem",
+                            background: "#09090b",
+                            fontSize: "14px",
+                        }}
+                    >
+                        {tailwind}
+                    </SyntaxHighlighter>
 
                     <div className="mt-4">
                         <CopyButton text={tailwind} />
