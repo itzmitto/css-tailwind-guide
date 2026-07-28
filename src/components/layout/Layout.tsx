@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
+import ThemeLayout from "./ThemeLayout";
 
 type LayoutProps = {
     children: ReactNode;
@@ -8,7 +9,7 @@ type LayoutProps = {
 
 export default function Layout({ children }: LayoutProps) {
     return (
-        <div className="min-h-screen bg-zinc-950 text-white">
+        <ThemeLayout>
             <Navbar />
 
             <div className="flex">
@@ -18,6 +19,6 @@ export default function Layout({ children }: LayoutProps) {
                     {children}
                 </main>
             </div>
-        </div>
+        </ThemeLayout>
     );
 }

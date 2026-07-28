@@ -3,7 +3,7 @@ import { navigation } from "../../data/navigation";
 
 export default function Sidebar() {
     return (
-        <aside className="h-[calc(100vh-64px)] w-72 overflow-y-auto border-r border-zinc-800 bg-zinc-950">
+        <aside className="h-[calc(100vh-64px)] w-72 overflow-y-auto border-r border-zinc-800 bg-inherit">
             <nav className="p-6">
                 {navigation.map((section) => (
                     <div
