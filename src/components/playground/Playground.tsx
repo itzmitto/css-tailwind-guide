@@ -2,18 +2,19 @@ import { useMemo, useState } from "react";
 import CopyButton from "../ui/CopyButton";
 import { cssMappings } from "../../data/playground/mappings";
 import { normalizeCss } from "../../utils/normalizeCss";
+import { parseCss } from "../../utils/parseCss";
 
 export default function Playground() {
     const [css, setCss] = useState("");
 
     const output = useMemo(() => {
-        const lines = css
-            .split(";")
-            .map((line) => line.trim())
-            .filter(Boolean);
+        const lines = parseCss(css);
 
         return lines
-            .map((line) => cssMappings[line] ?? `❌ Unknown: ${line}`)
+            .map((line) => {
+                const normalized = normalizeCss(line);
+                return cssMappings[normalized] ?? `❌ Unknown: ${line}`;
+            })
             .join("\n");
     }, [css]);
 
