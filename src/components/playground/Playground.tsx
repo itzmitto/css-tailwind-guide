@@ -178,7 +178,7 @@ flex-direction:column;`}
                                 "min-w-40",
                                 "border",
                                 "border-dashed",
-                                "border-border",
+                                "border-border", 
                                 "bg-surface",
                                 "p-4",
                             ].join(" ")}
