@@ -10,6 +10,7 @@ import { normalizeCss } from "../../utils/normalizeCss";
 import { parseCss } from "../../utils/parseCss";
 import { useSuggestions } from "../../hooks/useSuggestions";
 import { convertCss } from "../../utils/convertCss";
+import ReferencePanel from "./ReferencePanel";
 
 export default function Playground() {
     const [css, setCss] = useState("");
@@ -36,14 +37,17 @@ export default function Playground() {
                     convertCss(line)
                 );
             })
-            .filter(Boolean);
+            .filter((item): item is string => Boolean(item));
     }, [lines]);
 
-    const output = classes.join("\n");
+    const output = useMemo(() => {
+        return classes.join("\n");
+    }, [classes]);
 
     function handleSuggestionClick(suggestion: string) {
         const parts = css.split(";");
         parts[parts.length - 1] = suggestion;
+
         setCss(parts.join(";"));
         setShowSuggestions(false);
     }
@@ -83,23 +87,23 @@ export default function Playground() {
                 break;
 
             case "Escape":
+                e.preventDefault();
                 setShowSuggestions(false);
                 break;
         }
     }
 
     return (
-        <section className="mx-auto max-w-7xl">
+        <section className="mx-auto max-w-[1800px]">
             <h1 className="text-5xl font-black text-foreground">
                 CSS → Tailwind Playground
             </h1>
 
             <p className="mt-4 text-lg text-muted">
-                Type CSS properties and instantly see the matching
-                Tailwind utilities.
+                Type CSS properties and instantly see the matching Tailwind utilities.
             </p>
 
-            <div className="mt-10 grid gap-8 xl:grid-cols-3">
+            <div className="mt-10 grid gap-8 2xl:grid-cols-4">
                 <div className="relative">
                     <h2 className="mb-4 text-xl font-semibold">
                         CSS
@@ -122,7 +126,7 @@ flex-direction:column;`}
 
                     {showSuggestions &&
                         suggestions.length > 0 && (
-                            <div className="absolute left-0 right-0 mt-2 overflow-hidden rounded-2xl border border-border bg-background shadow-lg">
+                            <div className="absolute left-0 right-0 z-20 mt-2 overflow-hidden rounded-2xl border border-border bg-background shadow-xl">
                                 {suggestions.map(
                                     (suggestion, index) => (
                                         <button
@@ -193,6 +197,8 @@ flex-direction:column;`}
                         </div>
                     </div>
                 </div>
+
+                <ReferencePanel classes={classes} />
             </div>
         </section>
     );
