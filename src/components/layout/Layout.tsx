@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import ThemeLayout from "./ThemeLayout";
+import CommandPalette from "../command/CommandPalette";
 
 type LayoutProps = {
     children: ReactNode;
@@ -19,6 +20,8 @@ export default function Layout({ children }: LayoutProps) {
                     {children}
                 </main>
             </div>
+
+            <CommandPalette />
         </ThemeLayout>
     );
 }
