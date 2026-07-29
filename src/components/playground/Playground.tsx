@@ -1,16 +1,13 @@
-import {
-    KeyboardEvent,
-    useEffect,
-    useMemo,
-    useState,
-} from "react";
+import { useEffect, useMemo, useState } from "react";
 import CopyButton from "../ui/CopyButton";
+import CssEditor from "./CssEditor";
+import ReferencePanel from "./ReferencePanel";
 import { cssMappings } from "../../data/playground/mappings";
-import { normalizeCss } from "../../utils/normalizeCss";
-import { parseCss } from "../../utils/parseCss";
 import { useSuggestions } from "../../hooks/useSuggestions";
 import { convertCss } from "../../utils/convertCss";
-import ReferencePanel from "./ReferencePanel";
+import { normalizeCss } from "../../utils/normalizeCss";
+import { parseCss } from "../../utils/parseCss";
+import { getDiagnostics } from "../../utils/diagnostics/cssDiagnostics";
 
 export default function Playground() {
     const [css, setCss] = useState("");
@@ -40,57 +37,21 @@ export default function Playground() {
             .filter((item): item is string => Boolean(item));
     }, [lines]);
 
+    const diagnostics = useMemo(() => {
+        return getDiagnostics(lines);
+    }, [lines]);
+
     const output = useMemo(() => {
         return classes.join("\n");
     }, [classes]);
 
     function handleSuggestionClick(suggestion: string) {
         const parts = css.split(";");
+
         parts[parts.length - 1] = suggestion;
 
         setCss(parts.join(";"));
         setShowSuggestions(false);
-    }
-
-    function handleKeyDown(
-        e: KeyboardEvent<HTMLTextAreaElement>
-    ) {
-        if (!showSuggestions || suggestions.length === 0) {
-            return;
-        }
-
-        switch (e.key) {
-            case "ArrowDown":
-                e.preventDefault();
-
-                setSelectedSuggestion((prev) =>
-                    prev < suggestions.length - 1
-                        ? prev + 1
-                        : prev
-                );
-                break;
-
-            case "ArrowUp":
-                e.preventDefault();
-
-                setSelectedSuggestion((prev) =>
-                    prev > 0 ? prev - 1 : 0
-                );
-                break;
-
-            case "Enter":
-                e.preventDefault();
-
-                handleSuggestionClick(
-                    suggestions[selectedSuggestion]
-                );
-                break;
-
-            case "Escape":
-                e.preventDefault();
-                setShowSuggestions(false);
-                break;
-        }
     }
 
     return (
@@ -100,7 +61,8 @@ export default function Playground() {
             </h1>
 
             <p className="mt-4 text-lg text-muted">
-                Type CSS properties and instantly see the matching Tailwind utilities.
+                Type CSS properties and instantly see the matching Tailwind
+                utilities.
             </p>
 
             <div className="mt-10 grid gap-8 2xl:grid-cols-4">
@@ -109,19 +71,12 @@ export default function Playground() {
                         CSS
                     </h2>
 
-                    <textarea
+                    <CssEditor
                         value={css}
-                        onChange={(e) => {
-                            setCss(e.target.value);
+                        onChange={(value) => {
+                            setCss(value);
                             setShowSuggestions(true);
                         }}
-                        onFocus={() => setShowSuggestions(true)}
-                        onKeyDown={handleKeyDown}
-                        placeholder={`display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;`}
-                        className="h-96 w-full rounded-2xl border border-border bg-background p-6 font-mono outline-none"
                     />
 
                     {showSuggestions &&
@@ -137,11 +92,12 @@ flex-direction:column;`}
                                                     suggestion
                                                 )
                                             }
-                                            className={`block w-full border-b border-border px-4 py-3 text-left font-mono transition last:border-b-0 ${index ===
+                                            className={`block w-full border-b border-border px-4 py-3 text-left font-mono transition last:border-b-0 ${
+                                                index ===
                                                 selectedSuggestion
-                                                ? "bg-primary text-white"
-                                                : "hover:bg-surface"
-                                                }`}
+                                                    ? "bg-primary text-white"
+                                                    : "hover:bg-surface"
+                                            }`}
                                         >
                                             {suggestion}
                                         </button>
@@ -160,9 +116,34 @@ flex-direction:column;`}
                         <CopyButton text={output} />
                     </div>
 
-                    <pre className="h-96 overflow-auto rounded-2xl border border-border bg-background p-6">
+                    <pre className="h-72 overflow-auto rounded-2xl border border-border bg-background p-6">
                         <code>{output}</code>
                     </pre>
+
+                    {diagnostics.length > 0 && (
+                        <div className="mt-6 rounded-2xl border border-red-500 bg-red-500/10 p-4">
+                            <h3 className="mb-3 font-semibold text-red-500">
+                                Diagnostics
+                            </h3>
+
+                            <ul className="space-y-3">
+                                {diagnostics.map((item) => (
+                                    <li
+                                        key={`${item.line}-${item.message}`}
+                                        className="rounded-lg border border-red-500/20 p-3"
+                                    >
+                                        <div className="font-mono text-sm">
+                                            {item.line}
+                                        </div>
+
+                                        <div className="mt-1 text-sm text-red-500">
+                                            {item.message}
+                                        </div>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
                 </div>
 
                 <div>
@@ -178,7 +159,7 @@ flex-direction:column;`}
                                 "min-w-40",
                                 "border",
                                 "border-dashed",
-                                "border-border", 
+                                "border-border",
                                 "bg-surface",
                                 "p-4",
                             ].join(" ")}

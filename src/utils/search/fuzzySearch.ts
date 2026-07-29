@@ -1,4 +1,4 @@
-import { CommandItem } from "../../components/command/commandData";
+import type { CommandItem } from "../../components/command/commandData";
 
 function calculateScore(
     query: string,
