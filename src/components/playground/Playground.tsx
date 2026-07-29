@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import CopyButton from "../ui/CopyButton";
 import CssEditor from "./CssEditor";
 import ReferencePanel from "./ReferencePanel";
@@ -8,11 +9,28 @@ import { convertCss } from "../../utils/convertCss";
 import { normalizeCss } from "../../utils/normalizeCss";
 import { parseCss } from "../../utils/parseCss";
 import { getDiagnostics } from "../../utils/diagnostics/cssDiagnostics";
+import HistoryPanel from "./HistoryPanel";
 
 export default function Playground() {
-    const [css, setCss] = useState("");
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const [css, setCss] = useState(
+        () => searchParams.get("css") ?? ""
+    );
+
     const [selectedSuggestion, setSelectedSuggestion] = useState(0);
     const [showSuggestions, setShowSuggestions] = useState(true);
+
+    useEffect(() => {
+        if (!css.trim()) {
+            setSearchParams({});
+            return;
+        }
+
+        setSearchParams({
+            css,
+        });
+    }, [css, setSearchParams]);
 
     const suggestions = useSuggestions(
         css.split(";").pop() ?? ""
@@ -52,6 +70,12 @@ export default function Playground() {
 
         setCss(parts.join(";"));
         setShowSuggestions(false);
+    }
+
+    async function handleShare() {
+        await navigator.clipboard.writeText(
+            window.location.href
+        );
     }
 
     return (
@@ -108,12 +132,21 @@ export default function Playground() {
                 </div>
 
                 <div>
-                    <div className="mb-4 flex items-center justify-between">
+                    <div className="mb-4 flex items-center justify-between gap-3">
                         <h2 className="text-xl font-semibold">
                             Tailwind
                         </h2>
 
-                        <CopyButton text={output} />
+                        <div className="flex gap-3">
+                            <button
+                                onClick={handleShare}
+                                className="rounded-xl border border-border px-4 py-2 text-sm transition hover:bg-surface"
+                            >
+                                Share
+                            </button>
+
+                            <CopyButton text={output} />
+                        </div>
                     </div>
 
                     <pre className="h-72 overflow-auto rounded-2xl border border-border bg-background p-6">
