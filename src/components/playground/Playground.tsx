@@ -11,6 +11,7 @@ import { parseCss } from "../../utils/parseCss";
 import { getDiagnostics } from "../../utils/diagnostics/cssDiagnostics";
 import HistoryPanel from "./HistoryPanel";
 import TailwindInspector from "./TailwindInspector";
+import TailwindAssistant from "./TailwindAssistant";
 
 const HISTORY_KEY = "css-tailwind-history";
 
@@ -206,7 +207,7 @@ export default function Playground() {
                 <ReferencePanel classes={classes} />
 
                 <TailwindInspector classes={classes} />
-
+                <TailwindAssistant classes={classes} />
                 <HistoryPanel
                     history={history}
                     onSelect={(snippet) => {
