@@ -11,6 +11,8 @@ import { parseCss } from "../../utils/parseCss";
 import { getDiagnostics } from "../../utils/diagnostics/cssDiagnostics";
 import HistoryPanel from "./HistoryPanel";
 
+const HISTORY_KEY = "css-tailwind-history";
+
 export default function Playground() {
     const [searchParams, setSearchParams] = useSearchParams();
 
@@ -20,6 +22,20 @@ export default function Playground() {
 
     const [selectedSuggestion, setSelectedSuggestion] = useState(0);
     const [showSuggestions, setShowSuggestions] = useState(true);
+
+    const [history, setHistory] = useState<string[]>(() => {
+        const saved = localStorage.getItem(HISTORY_KEY);
+
+        if (!saved) {
+            return [];
+        }
+
+        try {
+            return JSON.parse(saved);
+        } catch {
+            return [];
+        }
+    });
 
     useEffect(() => {
         if (!css.trim()) {
@@ -31,6 +47,33 @@ export default function Playground() {
             css,
         });
     }, [css, setSearchParams]);
+    useEffect(() => {
+        if (!css.trim()) {
+            return;
+        }
+
+        const timer = setTimeout(() => {
+            setHistory((previous) => {
+                const next = [
+                    css,
+                    ...previous.filter(
+                        (item) => item !== css
+                    ),
+                ];
+
+                return next.slice(0, 10);
+            });
+        }, 800);
+
+        return () => clearTimeout(timer);
+    }, [css]);
+
+    useEffect(() => {
+        localStorage.setItem(
+            HISTORY_KEY,
+            JSON.stringify(history)
+        );
+    }, [history]);
 
     const suggestions = useSuggestions(
         css.split(";").pop() ?? ""
@@ -89,7 +132,7 @@ export default function Playground() {
                 utilities.
             </p>
 
-            <div className="mt-10 grid gap-8 2xl:grid-cols-4">
+            <div className="mt-10 grid gap-8 2xl:grid-cols-5">
                 <div className="relative">
                     <h2 className="mb-4 text-xl font-semibold">
                         CSS
@@ -116,12 +159,11 @@ export default function Playground() {
                                                     suggestion
                                                 )
                                             }
-                                            className={`block w-full border-b border-border px-4 py-3 text-left font-mono transition last:border-b-0 ${
-                                                index ===
+                                            className={`block w-full border-b border-border px-4 py-3 text-left font-mono transition last:border-b-0 ${index ===
                                                 selectedSuggestion
-                                                    ? "bg-primary text-white"
-                                                    : "hover:bg-surface"
-                                            }`}
+                                                ? "bg-primary text-white"
+                                                : "hover:bg-surface"
+                                                }`}
                                         >
                                             {suggestion}
                                         </button>
@@ -213,6 +255,17 @@ export default function Playground() {
                 </div>
 
                 <ReferencePanel classes={classes} />
+
+                <HistoryPanel
+                    history={history}
+                    onSelect={(snippet) => {
+                        setCss(snippet);
+                    }}
+                    onClear={() => {
+                        setHistory([]);
+                        localStorage.removeItem(HISTORY_KEY);
+                    }}
+                />
             </div>
         </section>
     );
