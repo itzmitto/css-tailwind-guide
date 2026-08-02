@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import CopyCodeButton from "./CopyCodeButton";
 import { cardVariants } from "../../data/components/card";
+import CodeTabs from "./CodeTabs";
 
 export default function CardBuilder() {
     const [background, setBackground] =
@@ -18,19 +19,19 @@ export default function CardBuilder() {
     const classes = useMemo(() => {
         return [
             cardVariants.background[
-                background as keyof typeof cardVariants.background
+            background as keyof typeof cardVariants.background
             ],
 
             cardVariants.rounded[
-                rounded as keyof typeof cardVariants.rounded
+            rounded as keyof typeof cardVariants.rounded
             ],
 
             cardVariants.shadow[
-                shadow as keyof typeof cardVariants.shadow
+            shadow as keyof typeof cardVariants.shadow
             ],
 
             cardVariants.padding[
-                padding as keyof typeof cardVariants.padding
+            padding as keyof typeof cardVariants.padding
             ],
         ].join(" ");
     }, [background, rounded, shadow, padding]);
@@ -205,7 +206,7 @@ export default function CardBuilder() {
                         <code>{classes}</code>
                     </pre>
 
-                    <CopyCodeButton code={classes} />
+                    <CodeTabs classes={classes} />
                 </div>
             </div>
         </div>

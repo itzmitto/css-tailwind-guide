@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { buttonVariants } from "../../data/components/button";
 import CopyCodeButton from "./CopyCodeButton";
+import CodeTabs from "./CodeTabs";
 
 export default function ButtonBuilder() {
     const [color, setColor] = useState("blue");
@@ -11,13 +12,13 @@ export default function ButtonBuilder() {
     const classes = useMemo(() => {
         return [
             buttonVariants.colors[
-                color as keyof typeof buttonVariants.colors
+            color as keyof typeof buttonVariants.colors
             ][variant as "filled" | "outline" | "ghost"],
             buttonVariants.sizes[
-                size as keyof typeof buttonVariants.sizes
+            size as keyof typeof buttonVariants.sizes
             ],
             buttonVariants.rounded[
-                rounded as keyof typeof buttonVariants.rounded
+            rounded as keyof typeof buttonVariants.rounded
             ],
             "font-semibold transition duration-300",
         ].join(" ");
@@ -154,7 +155,7 @@ export default function ButtonBuilder() {
                         <code>{classes}</code>
                     </pre>
 
-                    <CopyCodeButton code={classes} />
+                    <CodeTabs classes={classes} />
                 </div>
             </div>
         </div>
