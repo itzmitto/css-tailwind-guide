@@ -1,28 +1,27 @@
 import { useMemo, useState } from "react";
 import { buttonVariants } from "../../data/components/button";
+import CopyCodeButton from "./CopyCodeButton";
 
 export default function ButtonBuilder() {
     const [color, setColor] = useState("blue");
+    const [variant, setVariant] = useState("filled");
     const [size, setSize] = useState("medium");
     const [rounded, setRounded] = useState("lg");
-    const [variant, setVariant] = useState("filled");
 
-   const classes = useMemo(() => {
-    return [
-        buttonVariants.colors[
-            color as keyof typeof buttonVariants.colors
-        ][
-            variant as "filled" | "outline" | "ghost"
-        ],
-        buttonVariants.sizes[
-            size as keyof typeof buttonVariants.sizes
-        ],
-        buttonVariants.rounded[
-            rounded as keyof typeof buttonVariants.rounded
-        ],
-        "font-semibold transition duration-300",
-    ].join(" ");
-}, [color, size, rounded, variant]);
+    const classes = useMemo(() => {
+        return [
+            buttonVariants.colors[
+                color as keyof typeof buttonVariants.colors
+            ][variant as "filled" | "outline" | "ghost"],
+            buttonVariants.sizes[
+                size as keyof typeof buttonVariants.sizes
+            ],
+            buttonVariants.rounded[
+                rounded as keyof typeof buttonVariants.rounded
+            ],
+            "font-semibold transition duration-300",
+        ].join(" ");
+    }, [color, variant, size, rounded]);
 
     return (
         <div className="grid gap-8 lg:grid-cols-2">
@@ -45,11 +44,35 @@ export default function ButtonBuilder() {
                             className="w-full rounded-xl border border-border bg-background p-3"
                         >
                             <option value="blue">Blue</option>
-                            <option value="emerald">
-                                Emerald
-                            </option>
+                            <option value="emerald">Emerald</option>
                             <option value="red">Red</option>
                             <option value="zinc">Zinc</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label className="mb-2 block font-medium">
+                            Variant
+                        </label>
+
+                        <select
+                            value={variant}
+                            onChange={(e) =>
+                                setVariant(e.target.value)
+                            }
+                            className="w-full rounded-xl border border-border bg-background p-3"
+                        >
+                            <option value="filled">
+                                Filled
+                            </option>
+
+                            <option value="outline">
+                                Outline
+                            </option>
+
+                            <option value="ghost">
+                                Ghost
+                            </option>
                         </select>
                     </div>
 
@@ -127,9 +150,11 @@ export default function ButtonBuilder() {
                         Generated Tailwind
                     </h3>
 
-                    <pre className="overflow-auto rounded-xl border border-border bg-surface p-4">
-                        {classes}
+                    <pre className="overflow-auto rounded-xl border border-border bg-surface p-4 font-mono text-sm">
+                        <code>{classes}</code>
                     </pre>
+
+                    <CopyCodeButton code={classes} />
                 </div>
             </div>
         </div>
