@@ -1,11 +1,6 @@
 import { useState } from "react";
 import { layoutSections } from "../../data/layouts/layoutSections";
-import NavbarTemplate from "../templates/NavbarTemplate";
-import HeroTemplate from "../templates/HeroTemplate";
-import FooterTemplate from "../templates/FooterTemplate";
-import FeaturesTemplate from "../templates/FeaturesTemplate";
-import PricingTemplate from "../templates/PricingTemplate";
-import TestimonialsTemplate from "../templates/TestimonialsTemplate";
+import { templateRegistry } from "../../data/templates/registry";
 
 export default function LayoutBuilder() {
     const [selected, setSelected] = useState<string[]>([
@@ -54,45 +49,23 @@ export default function LayoutBuilder() {
 
                 <div className="mt-8 space-y-4">
                     {selected.map((section) => {
-                        switch (section) {
-                            case "navbar":
-                                return <NavbarTemplate key={section} />;
+                        const Component =
+                            templateRegistry[
+                            section as keyof typeof templateRegistry
+                            ];
 
-                            case "hero":
-                                return <HeroTemplate key={section} />;
-
-                            case "footer":
-                                return <FooterTemplate key={section} />;
-                            case "features":
-                                return (
-                                    <FeaturesTemplate
-                                        key={section}
-                                    />
-                                );
-
-                            case "pricing":
-                                return (
-                                    <PricingTemplate
-                                        key={section}
-                                    />
-                                );
-
-                            case "testimonials":
-                                return (
-                                    <TestimonialsTemplate
-                                        key={section}
-                                    />
-                                );
-                            default:
-                                return (
-                                    <div
-                                        key={section}
-                                        className="rounded-xl border border-dashed border-border p-8 text-center"
-                                    >
-                                        {section}
-                                    </div>
-                                );
+                        if (!Component) {
+                            return (
+                                <div
+                                    key={section}
+                                    className="rounded-xl border border-dashed border-border p-8 text-center"
+                                >
+                                    {section}
+                                </div>
+                            );
                         }
+
+                        return <Component key={section} />;
                     })}
                 </div>
             </div>
