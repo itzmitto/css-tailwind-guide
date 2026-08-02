@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { layoutSections } from "../../data/layouts/layoutSections";
+import NavbarTemplate from "../templates/NavbarTemplate";
+import HeroTemplate from "../templates/HeroTemplate";
+import FooterTemplate from "../templates/FooterTemplate";
 
 export default function LayoutBuilder() {
     const [selected, setSelected] = useState<string[]>([
@@ -47,14 +50,28 @@ export default function LayoutBuilder() {
                 </h2>
 
                 <div className="mt-8 space-y-4">
-                    {selected.map((section) => (
-                        <div
-                            key={section}
-                            className="rounded-xl border border-dashed border-border p-6 text-center"
-                        >
-                            {section.toUpperCase()}
-                        </div>
-                    ))}
+                    {selected.map((section) => {
+                        switch (section) {
+                            case "navbar":
+                                return <NavbarTemplate key={section} />;
+
+                            case "hero":
+                                return <HeroTemplate key={section} />;
+
+                            case "footer":
+                                return <FooterTemplate key={section} />;
+
+                            default:
+                                return (
+                                    <div
+                                        key={section}
+                                        className="rounded-xl border border-dashed border-border p-8 text-center"
+                                    >
+                                        {section}
+                                    </div>
+                                );
+                        }
+                    })}
                 </div>
             </div>
         </div>
