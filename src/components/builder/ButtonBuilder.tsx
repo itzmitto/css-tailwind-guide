@@ -5,21 +5,24 @@ export default function ButtonBuilder() {
     const [color, setColor] = useState("blue");
     const [size, setSize] = useState("medium");
     const [rounded, setRounded] = useState("lg");
+    const [variant, setVariant] = useState("filled");
 
-    const classes = useMemo(() => {
-        return [
-            buttonVariants.colors[
-                color as keyof typeof buttonVariants.colors
-            ],
-            buttonVariants.sizes[
-                size as keyof typeof buttonVariants.sizes
-            ],
-            buttonVariants.rounded[
-                rounded as keyof typeof buttonVariants.rounded
-            ],
-            "font-semibold transition"
-        ].join(" ");
-    }, [color, size, rounded]);
+   const classes = useMemo(() => {
+    return [
+        buttonVariants.colors[
+            color as keyof typeof buttonVariants.colors
+        ][
+            variant as "filled" | "outline" | "ghost"
+        ],
+        buttonVariants.sizes[
+            size as keyof typeof buttonVariants.sizes
+        ],
+        buttonVariants.rounded[
+            rounded as keyof typeof buttonVariants.rounded
+        ],
+        "font-semibold transition duration-300",
+    ].join(" ");
+}, [color, size, rounded, variant]);
 
     return (
         <div className="grid gap-8 lg:grid-cols-2">
