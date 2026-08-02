@@ -10,6 +10,10 @@ export const navigation = [
                 name: "Playground",
                 path: "/playground",
             },
+            {
+                name: "Component Builder",
+                path: "/builder",
+            },
         ],
     },
     {
