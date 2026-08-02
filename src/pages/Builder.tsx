@@ -2,6 +2,7 @@ import { useState } from "react";
 import Layout from "../components/layout/Layout";
 import ComponentSelector from "../components/builder/ComponentSelector";
 import ButtonBuilder from "../components/builder/ButtonBuilder";
+import CardBuilder from "../components/builder/CardBuilder";
 
 export default function Builder() {
     const [component, setComponent] =
@@ -24,12 +25,7 @@ export default function Builder() {
                         {component === "button" && (
                             <ButtonBuilder />
                         )}
-
-                        {component === "card" && (
-                            <div className="rounded-2xl border border-border p-10">
-                                Card Builder Coming Soon
-                            </div>
-                        )}
+                        {component === "card" && <CardBuilder />}
 
                         {component === "badge" && (
                             <div className="rounded-2xl border border-border p-10">
