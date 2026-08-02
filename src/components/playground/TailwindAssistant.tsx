@@ -11,7 +11,7 @@ export default function TailwindAssistant({
         tip.required.every((item) =>
             classes.includes(item)
         )
-    );
+    );  
 
     if (matches.length === 0) {
         return null;
