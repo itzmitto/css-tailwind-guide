@@ -12,6 +12,7 @@ import { getDiagnostics } from "../../utils/diagnostics/cssDiagnostics";
 import HistoryPanel from "./HistoryPanel";
 import TailwindInspector from "./TailwindInspector";
 import TailwindAssistant from "./TailwindAssistant";
+import DeviceSelector from "./DeviceSelector";
 
 const HISTORY_KEY = "css-tailwind-history";
 
@@ -21,12 +22,20 @@ export default function Playground() {
         () => searchParams.get("css") ?? ""
     );
     const [selectedSuggestion, setSelectedSuggestion] = useState(0);
+
     const [showSuggestions, setShowSuggestions] = useState(true);
+
+    const [device, setDevice] = useState<
+        "desktop" | "tablet" | "mobile"
+    >("desktop");
+
     const [history, setHistory] = useState<string[]>(() => {
         const saved = localStorage.getItem(HISTORY_KEY);
+
         if (!saved) {
             return [];
         }
+
         try {
             return JSON.parse(saved);
         } catch {
@@ -177,9 +186,16 @@ export default function Playground() {
                     )}
                 </div>
                 <div>
-                    <h2 className="mb-4 text-xl font-semibold">
-                        Live Preview
-                    </h2>
+                    <div className="mb-4 flex items-center justify-between">
+                        <h2 className="text-xl font-semibold">
+                            Live Preview
+                        </h2>
+
+                        <DeviceSelector
+                            value={device}
+                            onChange={setDevice}
+                        />
+                    </div>
                     <div className="flex h-96 items-center justify-center rounded-2xl border border-border bg-background p-8">
                         <div
                             className={[
