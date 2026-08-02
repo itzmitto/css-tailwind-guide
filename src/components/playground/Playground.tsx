@@ -61,7 +61,10 @@ export default function Playground() {
                     css,
                     ...previous.filter(
                         (item) => item !== css
-                    ),]; return next.slice(0, 10);
+                    ),
+                ];
+
+                return next.slice(0, 10);
             });
         }, 800);
         return () => clearTimeout(timer);
@@ -196,26 +199,39 @@ export default function Playground() {
                             onChange={setDevice}
                         />
                     </div>
+
+
+                    
                     <div className="flex h-96 items-center justify-center rounded-2xl border border-border bg-background p-8">
                         <div
-                            className={[
-                                ...classes,
-                                "min-h-40",
-                                "min-w-40",
-                                "border",
-                                "border-dashed",
-                                "border-border",
-                                "bg-surface",
-                                "p-4",
-                            ].join(" ")} >
-                            <div className="rounded-lg bg-blue-500 px-4 py-2 text-center text-white">
-                                Item 1
-                            </div>
-                            <div className="mt-2 rounded-lg bg-emerald-500 px-4 py-2 text-center text-white">
-                                Item 2
-                            </div>
-                            <div className="mt-2 rounded-lg bg-rose-500 px-4 py-2 text-center text-white">
-                                Item 3
+                            className={`transition-all duration-300 ${
+                                device === "desktop"
+                                    ? "w-full"
+                                    : device === "tablet"
+                                    ? "w-[768px] max-w-full"
+                                    : "w-[390px] max-w-full"
+                            }`}
+                        >
+                            <div
+                                className={[
+                                    ...classes,
+                                    "min-h-40",
+                                    "min-w-40",
+                                    "border",
+                                    "border-dashed",
+                                    "border-border",
+                                    "bg-surface",
+                                    "p-4",
+                                ].join(" ")} >
+                                <div className="rounded-lg bg-blue-500 px-4 py-2 text-center text-white">
+                                    Item 1
+                                </div>
+                                <div className="mt-2 rounded-lg bg-emerald-500 px-4 py-2 text-center text-white">
+                                    Item 2
+                                </div>
+                                <div className="mt-2 rounded-lg bg-rose-500 px-4 py-2 text-center text-white">
+                                    Item 3
+                                </div>
                             </div>
                         </div>
                     </div>
