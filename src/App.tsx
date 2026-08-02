@@ -4,6 +4,7 @@ import Colors from "./pages/Colors";
 import Flexbox from "./pages/Flexbox";
 import PlaygroundPage from "./pages/Playground";
 import Builder from "./pages/Builder";
+import LayoutBuilderPage from "./pages/LayoutBuilder";
 
 function App() {
   return (
@@ -19,6 +20,10 @@ function App() {
         <Route
           path="/builder"
           element={<Builder />}
+        />
+        <Route
+          path="/layout-builder"
+          element={<LayoutBuilderPage />}
         />
       </Routes>
     </BrowserRouter>

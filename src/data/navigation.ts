@@ -14,6 +14,10 @@ export const navigation = [
                 name: "Component Builder",
                 path: "/builder",
             },
+            {
+                name: "Layout Builder",
+                path: "/layout-builder",
+            },
         ],
     },
     {
