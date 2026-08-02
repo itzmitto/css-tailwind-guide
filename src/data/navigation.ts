@@ -10,6 +10,11 @@ export const navigation = [
                 name: "Playground",
                 path: "/playground",
             },
+        ],
+    },
+    {
+        title: "Builders",
+        links: [
             {
                 name: "Component Builder",
                 path: "/builder",
@@ -17,6 +22,10 @@ export const navigation = [
             {
                 name: "Layout Builder",
                 path: "/layout-builder",
+            },
+            {
+                name: "Marketplace",
+                path: "/marketplace",
             },
         ],
     },

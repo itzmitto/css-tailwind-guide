@@ -5,6 +5,7 @@ import Flexbox from "./pages/Flexbox";
 import PlaygroundPage from "./pages/Playground";
 import Builder from "./pages/Builder";
 import LayoutBuilderPage from "./pages/LayoutBuilder";
+import MarketplacePage from "./pages/Marketplace";
 
 function App() {
   return (
@@ -24,6 +25,10 @@ function App() {
         <Route
           path="/layout-builder"
           element={<LayoutBuilderPage />}
+        />
+        <Route
+          path="/marketplace"
+          element={<MarketplacePage />}
         />
       </Routes>
     </BrowserRouter>
