@@ -3,6 +3,9 @@ import { layoutSections } from "../../data/layouts/layoutSections";
 import NavbarTemplate from "../templates/NavbarTemplate";
 import HeroTemplate from "../templates/HeroTemplate";
 import FooterTemplate from "../templates/FooterTemplate";
+import FeaturesTemplate from "../templates/FeaturesTemplate";
+import PricingTemplate from "../templates/PricingTemplate";
+import TestimonialsTemplate from "../templates/TestimonialsTemplate";
 
 export default function LayoutBuilder() {
     const [selected, setSelected] = useState<string[]>([
@@ -60,7 +63,26 @@ export default function LayoutBuilder() {
 
                             case "footer":
                                 return <FooterTemplate key={section} />;
+                            case "features":
+                                return (
+                                    <FeaturesTemplate
+                                        key={section}
+                                    />
+                                );
 
+                            case "pricing":
+                                return (
+                                    <PricingTemplate
+                                        key={section}
+                                    />
+                                );
+
+                            case "testimonials":
+                                return (
+                                    <TestimonialsTemplate
+                                        key={section}
+                                    />
+                                );
                             default:
                                 return (
                                     <div
