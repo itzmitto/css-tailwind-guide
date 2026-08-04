@@ -1,6 +1,5 @@
 import { useMemo, useState } from "react";
 import { buttonVariants } from "../../data/components/button";
-import CopyCodeButton from "./CopyCodeButton";
 import CodeTabs from "./CodeTabs";
 
 export default function ButtonBuilder() {

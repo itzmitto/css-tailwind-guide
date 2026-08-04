@@ -1,5 +1,4 @@
 import { useMemo, useState } from "react";
-import CopyCodeButton from "./CopyCodeButton";
 import { cardVariants } from "../../data/components/card";
 import CodeTabs from "./CodeTabs";
 

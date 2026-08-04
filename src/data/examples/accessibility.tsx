@@ -1,0 +1,3 @@
+import { createCategoryDocumentation } from "../docs/createCategoryDocumentation";
+
+export default createCategoryDocumentation({ slug: "accessibility", title: "Accessibility", group: "Accessibility", css: "outline: 2px solid transparent; outline-offset: 2px;", tailwind: "focus-visible:outline-2 focus-visible:outline-blue-500", previewLabel: "Focus this preview", options: [{ label: "Focus ring", tailwind: "focus-visible:outline-2 focus-visible:outline-blue-500", css: "outline on keyboard focus" }, { label: "Screen reader", tailwind: "sr-only", css: "visually hidden text" }, { label: "Not screen reader", tailwind: "not-sr-only", css: "restore visible text" }] });

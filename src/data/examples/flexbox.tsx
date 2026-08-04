@@ -1,126 +1,18 @@
-import type { DocsSection } from "../../types/docs";
+import { createCategoryDocumentation } from "../docs/createCategoryDocumentation";
 
-export const flexbox: DocsSection = {
+const flexbox = createCategoryDocumentation({
+    slug: "flexbox",
     title: "Flexbox",
-
-    description:
-        "Learn the CSS Flexbox layout system and its Tailwind CSS utilities.",
-
-    examples: [
-        {
-            id: "display-flex",
-
-            title: "Display Flex",
-
-            description:
-                "Creates a flex container.",
-
-            css: `display: flex;`,
-
-            tailwind: `flex`,
-
-            preview: (
-                <div className="flex gap-3">
-                    <div className="h-16 w-16 rounded bg-blue-500"></div>
-                    <div className="h-16 w-16 rounded bg-blue-500"></div>
-                    <div className="h-16 w-16 rounded bg-blue-500"></div>
-                </div>
-            ),
-
-            difficulty: "Beginner",
-
-            tags: [
-                "flex",
-                "layout",
-            ],
-
-            browserSupport: [
-                "Chrome",
-                "Firefox",
-                "Safari",
-                "Edge",
-            ],
-
-            related: [
-                "justify-content",
-                "align-items",
-            ],
-        },
-
-        {
-            id: "justify-center",
-
-            title: "Justify Content",
-
-            description:
-                "Centers items horizontally.",
-
-            css: `justify-content: center;`,
-
-            tailwind: `justify-center`,
-
-            preview: (
-                <div className="flex justify-center gap-3 w-full">
-                    <div className="h-16 w-16 rounded bg-green-500"></div>
-                    <div className="h-16 w-16 rounded bg-green-500"></div>
-                </div>
-            ),
-
-            difficulty: "Beginner",
-
-            tags: [
-                "justify",
-                "flex",
-            ],
-
-            browserSupport: [
-                "Chrome",
-                "Firefox",
-                "Safari",
-                "Edge",
-            ],
-
-            related: [
-                "align-items",
-            ],
-        },
-
-        {
-            id: "align-items",
-
-            title: "Align Items",
-
-            description:
-                "Centers items vertically.",
-
-            css: `align-items: center;`,
-
-            tailwind: `items-center`,
-
-            preview: (
-                <div className="flex h-40 items-center gap-3">
-                    <div className="h-16 w-16 rounded bg-purple-500"></div>
-                    <div className="h-16 w-16 rounded bg-purple-500"></div>
-                </div>
-            ),
-
-            difficulty: "Beginner",
-
-            tags: [
-                "alignment",
-                "flex",
-            ],
-
-            browserSupport: [
-                "Chrome",
-                "Firefox",
-                "Safari",
-                "Edge",
-            ],
-
-            related: [
-                "justify-content",
-            ],
-        },
+    group: "Layout",
+    css: "display: flex; justify-content: center;",
+    tailwind: "flex justify-center",
+    previewLabel: "Flex preview",
+    options: [
+        { label: "Row", tailwind: "flex flex-row", css: "display: flex; flex-direction: row" },
+        { label: "Column", tailwind: "flex flex-col", css: "display: flex; flex-direction: column" },
+        { label: "Center", tailwind: "flex justify-center", css: "display: flex; justify-content: center" },
     ],
-};
+});
+
+export { flexbox };
+export default flexbox;

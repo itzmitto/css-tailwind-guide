@@ -1,3 +1,23 @@
+import { documentationPages } from "./docs/registry";
+
+const documentationGroups = [
+    "Layout",
+    "Design",
+    "Effects",
+    "Interactivity",
+    "Accessibility",
+] as const;
+
+const documentationNavigation = documentationGroups.map((title) => ({
+    title,
+    links: documentationPages
+        .filter((page) => page.group === title)
+        .map((page) => ({
+            name: page.title,
+            path: `/docs/${page.slug}`,
+        })),
+}));
+
 export const navigation = [
     {
         title: "Getting Started",
@@ -27,77 +47,11 @@ export const navigation = [
                 name: "Marketplace",
                 path: "/marketplace",
             },
-        ],
-    },
-    {
-        title: "Layout",
-        links: [
             {
-                name: "Display",
-                path: "/display",
-            },
-            {
-                name: "Flexbox",
-                path: "/flexbox",
-            },
-            {
-                name: "Grid",
-                path: "/grid",
-            },
-            {
-                name: "Position",
-                path: "/position",
-            },
-            {
-                name: "Spacing",
-                path: "/spacing",
-            },
-            {
-                name: "Sizing",
-                path: "/sizing",
+                name: "Icon Browser",
+                path: "/icons",
             },
         ],
     },
-    {
-        title: "Design",
-        links: [
-            {
-                name: "Colors",
-                path: "/colors",
-            },
-            {
-                name: "Typography",
-                path: "/typography",
-            },
-            {
-                name: "Backgrounds",
-                path: "/backgrounds",
-            },
-            {
-                name: "Borders",
-                path: "/borders",
-            },
-            {
-                name: "Shadows",
-                path: "/shadows",
-            },
-        ],
-    },
-    {
-        title: "Effects",
-        links: [
-            {
-                name: "Transforms",
-                path: "/transforms",
-            },
-            {
-                name: "Transitions",
-                path: "/transitions",
-            },
-            {
-                name: "Animations",
-                path: "/animations",
-            },
-        ],
-    },
+    ...documentationNavigation,
 ];

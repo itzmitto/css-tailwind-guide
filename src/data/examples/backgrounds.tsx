@@ -1,0 +1,3 @@
+import { createCategoryDocumentation } from "../docs/createCategoryDocumentation";
+
+export default createCategoryDocumentation({ slug: "backgrounds", title: "Backgrounds", group: "Design", css: "background: linear-gradient(to right, #2563eb, #4f46e5);", tailwind: "bg-gradient-to-r from-blue-600 to-indigo-600", previewLabel: "Background preview", options: [{ label: "Surface", tailwind: "bg-surface", css: "background-color: surface" }, { label: "Blue", tailwind: "bg-blue-500", css: "background-color: #3b82f6" }, { label: "Gradient", tailwind: "bg-gradient-to-r from-blue-600 to-indigo-600", css: "linear-gradient(to right, blue, indigo)" }] });

@@ -21,10 +21,13 @@ export default function CopyButton({ text }: CopyButtonProps) {
     return (
         <button
             onClick={handleCopy}
-            className="flex items-center gap-2 rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-2 text-sm font-medium text-white transition hover:border-blue-500 hover:bg-zinc-700"
+            aria-label={copied ? "Code copied" : "Copy code"}
+            className="flex items-center gap-2 rounded-lg border border-border bg-surface px-4 py-2 text-sm font-medium text-foreground transition hover:border-blue-500 hover:bg-card"
         >
             {copied ? <Check size={16} /> : <Copy size={16} />}
-            {copied ? "Copied!" : "Copy"}
+            <span aria-live="polite">
+                {copied ? "Copied!" : "Copy"}
+            </span>
         </button>
     );
 }

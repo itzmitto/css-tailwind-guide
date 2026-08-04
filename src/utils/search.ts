@@ -1,5 +1,5 @@
 import { searchIndex } from "../data/search";
-import { Example } from "../types/docs";
+import type { Example } from "../types/docs";
 
 export function searchExamples(query: string): Example[] {
     const q = query.toLowerCase().trim();
@@ -9,7 +9,7 @@ export function searchExamples(query: string): Example[] {
     }
 
     return searchIndex.flatMap((section) =>
-        section.examples.filter((example) => {
+        [section.example].filter((example) => {
             return (
                 example.title.toLowerCase().includes(q) ||
                 example.description.toLowerCase().includes(q) ||

@@ -1,90 +1,45 @@
 import Layout from "../layout/Layout";
 import ExampleCard from "../cards/ExampleCard";
-import type { Example } from "../../types/docs";
+import DocumentationGuidance from "./DocumentationGuidance";
+import InteractiveExample from "./InteractiveExample";
+import type { DocumentationPage } from "../../types/docs";
 
 type DocsPageProps = {
-    title: string;
-    description: string;
-    examples: Example[];
+    page: DocumentationPage;
 };
 
-export default function DocsPage({
-    title,
-    description,
-    examples,
-}: DocsPageProps) {
+export default function DocsPage({ page }: DocsPageProps) {
+    const { example } = page;
+
     return (
         <Layout>
             <section>
                 <header className="mb-14 rounded-3xl border border-border bg-surface p-10">
                     <h1 className="text-5xl font-black text-foreground">
-                        {title}
+                        {page.title}
                     </h1>
 
                     <p className="mt-5 max-w-3xl text-lg text-muted">
-                        {description}
+                        {page.introduction}
                     </p>
 
-                    <div className="mt-10 flex flex-wrap gap-4">
-                        <div className="rounded-xl border border-border bg-background px-5 py-3">
-                            <p className="text-sm text-muted">
-                                Examples
-                            </p>
-
-                            <p className="text-2xl font-bold text-foreground">
-                                {examples.length}
-                            </p>
-                        </div>
-
-                        <div className="rounded-xl border border-border bg-background px-5 py-3">
-                            <p className="text-sm text-muted">
-                                Beginner
-                            </p>
-
-                            <p className="text-2xl font-bold text-foreground">
-                                {
-                                    examples.filter(
-                                        (example) =>
-                                            example.difficulty === "Beginner"
-                                    ).length
-                                }
-                            </p>
-                        </div>
-
-                        <div className="rounded-xl border border-border bg-background px-5 py-3">
-                            <p className="text-sm text-muted">
-                                Tags
-                            </p>
-
-                            <p className="text-2xl font-bold text-foreground">
-                                {
-                                    new Set(
-                                        examples.flatMap(
-                                            (example) => example.tags
-                                        )
-                                    ).size
-                                }
-                            </p>
-                        </div>
-                    </div>
+                    <p className="mt-6 max-w-3xl leading-7 text-muted">
+                        {page.explanation}
+                    </p>
                 </header>
 
-                <div className="space-y-10">
-                    {examples.map((example) => (
-                        <ExampleCard
-                            key={example.id}
-                            title={example.title}
-                            description={example.description}
-                            css={example.css}
-                            tailwind={example.tailwind}
-                            difficulty={example.difficulty}
-                            tags={example.tags}
-                            browserSupport={example.browserSupport}
-                        >
-                            {example.preview}
-                        </ExampleCard>
-                    ))}
+                <ExampleCard {...example}>{example.preview}</ExampleCard>
+
+                <div className="mt-10">
+                    <InteractiveExample example={page.interactive} />
                 </div>
+
+                <DocumentationGuidance
+                    bestPractices={page.bestPractices}
+                    commonMistakes={page.commonMistakes}
+                    tips={page.tips}
+                    relatedUtilities={page.relatedUtilities}
+                />
             </section>
         </Layout>
     );

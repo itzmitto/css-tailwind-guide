@@ -6,6 +6,8 @@ import PlaygroundPage from "./pages/Playground";
 import Builder from "./pages/Builder";
 import LayoutBuilderPage from "./pages/LayoutBuilder";
 import MarketplacePage from "./pages/Marketplace";
+import Icons from "./pages/Icons";
+import Documentation from "./pages/Documentation";
 
 function App() {
   return (
@@ -14,6 +16,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/colors" element={<Colors />} />
         <Route path="/flexbox" element={<Flexbox />} />
+        <Route path="/docs/:slug" element={<Documentation />} />
         <Route
           path="/playground"
           element={<PlaygroundPage />}
@@ -30,6 +33,7 @@ function App() {
           path="/marketplace"
           element={<MarketplacePage />}
         />
+        <Route path="/icons" element={<Icons />} />
       </Routes>
     </BrowserRouter>
   );

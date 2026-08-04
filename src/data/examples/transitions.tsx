@@ -1,0 +1,3 @@
+import { createCategoryDocumentation } from "../docs/createCategoryDocumentation";
+
+export default createCategoryDocumentation({ slug: "transitions", title: "Transitions", group: "Effects", css: "transition: colors 150ms ease-in-out;", tailwind: "transition-colors duration-150", previewLabel: "Transition preview", options: [{ label: "Colors", tailwind: "transition-colors duration-150 hover:bg-indigo-600", css: "transition: colors 150ms" }, { label: "All", tailwind: "transition duration-300 hover:scale-105", css: "transition: all 300ms" }, { label: "Slow", tailwind: "transition duration-700", css: "transition-duration: 700ms" }] });

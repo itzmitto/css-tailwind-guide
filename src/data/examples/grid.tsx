@@ -1,0 +1,3 @@
+import { createCategoryDocumentation } from "../docs/createCategoryDocumentation";
+
+export default createCategoryDocumentation({ slug: "grid", title: "Grid", group: "Layout", css: "display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));", tailwind: "grid grid-cols-3", previewLabel: "Grid preview", options: [{ label: "Two columns", tailwind: "grid grid-cols-2", css: "grid-template-columns: repeat(2, minmax(0, 1fr))" }, { label: "Three columns", tailwind: "grid grid-cols-3", css: "grid-template-columns: repeat(3, minmax(0, 1fr))" }, { label: "Auto fit", tailwind: "grid grid-cols-1 md:grid-cols-3", css: "responsive grid columns" }] });

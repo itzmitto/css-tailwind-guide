@@ -16,38 +16,14 @@ export const commandItems: CommandItem[] = [
         path: "/playground",
     },
     {
-        title: "Display",
-        description: "Display utilities",
-        path: "/docs/display",
+        title: "Icon Browser",
+        description: "Browse and copy Lucide React icons",
+        path: "/icons",
     },
-    {
-        title: "Flexbox",
-        description: "Flex utilities",
-        path: "/docs/flexbox",
-    },
-    {
-        title: "Grid",
-        description: "Grid utilities",
-        path: "/docs/grid",
-    },
-    {
-        title: "Spacing",
-        description: "Margin & Padding",
-        path: "/docs/spacing",
-    },
-    {
-        title: "Sizing",
-        description: "Width & Height",
-        path: "/docs/sizing",
-    },
-    {
-        title: "Colors",
-        description: "Tailwind colors",
-        path: "/docs/colors",
-    },
-    {
-        title: "Typography",
-        description: "Fonts & text",
-        path: "/docs/typography",
-    },
+    ...documentationPages.map((page) => ({
+        title: page.title,
+        description: `${page.title} Tailwind utilities`,
+        path: `/docs/${page.slug}`,
+    })),
 ];
+import { documentationPages } from "../../data/docs/registry";

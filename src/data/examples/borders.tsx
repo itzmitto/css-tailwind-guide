@@ -1,0 +1,3 @@
+import { createCategoryDocumentation } from "../docs/createCategoryDocumentation";
+
+export default createCategoryDocumentation({ slug: "borders", title: "Borders", group: "Design", css: "border: 2px solid #3b82f6; border-radius: 0.75rem;", tailwind: "border-2 border-blue-500 rounded-xl", previewLabel: "Border preview", options: [{ label: "Thin", tailwind: "border border-blue-500", css: "border: 1px solid #3b82f6" }, { label: "Rounded", tailwind: "border-2 border-blue-500 rounded-xl", css: "border-radius: 0.75rem" }, { label: "Dashed", tailwind: "border-2 border-dashed border-blue-500", css: "border-style: dashed" }] });
