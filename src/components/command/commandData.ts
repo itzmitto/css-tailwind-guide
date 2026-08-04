@@ -16,6 +16,11 @@ export const commandItems: CommandItem[] = [
         path: "/playground",
     },
     {
+        title: "Responsive Playground",
+        description: "Learn Tailwind responsive breakpoints",
+        path: "/responsive",
+    },
+    {
         title: "Icon Browser",
         description: "Browse and copy Lucide React icons",
         path: "/icons",

@@ -2,6 +2,7 @@ import { documentationPages } from "./docs/registry";
 
 export const searchData = [
     { title: "Playground", path: "/playground" },
+    { title: "Responsive Playground", path: "/responsive" },
     { title: "Component Builder", path: "/builder" },
     { title: "Layout Builder", path: "/layout-builder" },
     { title: "Marketplace", path: "/marketplace" },

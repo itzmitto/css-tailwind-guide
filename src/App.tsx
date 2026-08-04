@@ -8,6 +8,7 @@ import LayoutBuilderPage from "./pages/LayoutBuilder";
 import MarketplacePage from "./pages/Marketplace";
 import Icons from "./pages/Icons";
 import Documentation from "./pages/Documentation";
+import Responsive from "./pages/Responsive";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/colors" element={<Colors />} />
         <Route path="/flexbox" element={<Flexbox />} />
         <Route path="/docs/:slug" element={<Documentation />} />
+        <Route path="/responsive" element={<Responsive />} />
         <Route
           path="/playground"
           element={<PlaygroundPage />}
