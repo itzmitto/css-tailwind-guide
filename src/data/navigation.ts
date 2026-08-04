@@ -34,6 +34,10 @@ export const navigation = [
                 name: "Responsive Playground",
                 path: "/responsive",
             },
+            {
+                name: "Challenge Mode",
+                path: "/challenges",
+            },
         ],
     },
     {

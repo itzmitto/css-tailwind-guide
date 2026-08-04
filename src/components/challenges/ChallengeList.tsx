@@ -1,0 +1,17 @@
+import { useMemo, useState } from "react";
+import { challenges } from "../../data/challenges";
+import type { ChallengeDifficulty } from "../../data/challenges";
+import useChallengeProgress from "../../hooks/useChallengeProgress";
+import ChallengeCard from "./ChallengeCard";
+
+const filters: (ChallengeDifficulty | "All")[] = ["All", "Beginner", "Intermediate", "Advanced"];
+
+export default function ChallengeList() {
+    const [filter, setFilter] = useState<ChallengeDifficulty | "All">("All");
+    const progress = useChallengeProgress();
+    const visibleChallenges = useMemo(() => challenges.filter((challenge) => filter === "All" || challenge.difficulty === filter), [filter]);
+
+    return <section className="mx-auto max-w-7xl"><header className="max-w-3xl"><span className="rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-2 text-sm font-medium text-blue-400">Learn by building</span><h1 className="mt-8 text-5xl font-black text-foreground sm:text-6xl">Tailwind Challenge Mode</h1><p className="mt-5 text-lg leading-8 text-muted">Practice translating CSS requirements into Tailwind utilities and earn XP as you solve challenges.</p></header><ProgressPanel score={progress.score} percentage={progress.percentage} level={progress.level} completed={progress.completedIds.length} total={challenges.length} badges={progress.badges} /><div role="group" aria-label="Challenge difficulty" className="mt-10 flex flex-wrap gap-3">{filters.map((item) => <button key={item} type="button" onClick={() => setFilter(item)} aria-pressed={filter === item} className={`rounded-xl border px-4 py-2 text-sm font-semibold transition ${filter === item ? "border-blue-500 bg-blue-500 text-white" : "border-border text-muted hover:bg-surface hover:text-foreground"}`}>{item}</button>)}</div><div className="mt-8 space-y-6">{visibleChallenges.map((challenge) => <ChallengeCard key={challenge.id} challenge={challenge} completed={progress.completedIds.includes(challenge.id)} onComplete={progress.markComplete} />)}</div></section>;
+}
+
+function ProgressPanel({ score, percentage, level, completed, total, badges }: { score: number; percentage: number; level: string; completed: number; total: number; badges: { id: string; name: string; description: string }[] }) { return <section className="mt-10 rounded-2xl border border-border bg-background p-6"><div className="flex flex-wrap items-end justify-between gap-4"><div><p className="text-sm font-semibold uppercase tracking-wider text-blue-400">{level}</p><h2 className="mt-2 text-3xl font-black text-foreground">{score} XP</h2><p className="mt-2 text-muted">{completed} of {total} challenges completed</p></div><p className="text-3xl font-black text-foreground">{percentage}%</p></div><div className="mt-5 h-3 overflow-hidden rounded-full bg-surface"><div className="h-full rounded-full bg-blue-500 transition-all duration-300" style={{ width: `${percentage}%` }} /></div><div className="mt-6"><h3 className="text-sm font-semibold uppercase tracking-wider text-muted">Badges</h3>{badges.length === 0 ? <p className="mt-3 text-sm text-muted">Complete a challenge to unlock your first badge.</p> : <div className="mt-3 flex flex-wrap gap-3">{badges.map((badge) => <div key={badge.id} title={badge.description} className="rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3"><p className="font-semibold text-amber-300">{badge.name}</p><p className="mt-1 text-xs text-muted">{badge.description}</p></div>)}</div>}</div></section>; }

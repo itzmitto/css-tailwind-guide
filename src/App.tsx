@@ -9,6 +9,7 @@ import MarketplacePage from "./pages/Marketplace";
 import Icons from "./pages/Icons";
 import Documentation from "./pages/Documentation";
 import Responsive from "./pages/Responsive";
+import Challenges from "./pages/Challenges";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/flexbox" element={<Flexbox />} />
         <Route path="/docs/:slug" element={<Documentation />} />
         <Route path="/responsive" element={<Responsive />} />
+        <Route path="/challenges" element={<Challenges />} />
         <Route
           path="/playground"
           element={<PlaygroundPage />}

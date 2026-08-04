@@ -21,6 +21,11 @@ export const commandItems: CommandItem[] = [
         path: "/responsive",
     },
     {
+        title: "Challenge Mode",
+        description: "Practice Tailwind utility challenges",
+        path: "/challenges",
+    },
+    {
         title: "Icon Browser",
         description: "Browse and copy Lucide React icons",
         path: "/icons",
