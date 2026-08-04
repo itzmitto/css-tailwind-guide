@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import ResponsivePreviewFrame from "../../components/responsive/ResponsivePreviewFrame";
 import type { BreakpointId } from "./breakpoints";
 
 type ResponsiveExample = {
@@ -52,10 +53,6 @@ function createUtilities(base: string, responsive: string) {
     ) as Record<BreakpointId, string>;
 }
 
-function PreviewFrame({ children }: { children: ReactNode }) {
-    return <div className="w-full rounded-xl border border-border bg-surface p-4">{children}</div>;
-}
-
 export const responsiveExamples: ResponsiveExample[] = [
     {
         id: "width",
@@ -64,11 +61,11 @@ export const responsiveExamples: ResponsiveExample[] = [
         css: createCodes("width: 100%;", "width: 50%;"),
         tailwind: createUtilities("w-full", "w-1/2"),
         preview: (breakpoint) => (
-            <PreviewFrame>
+            <ResponsivePreviewFrame>
                 <div className={`rounded-lg bg-blue-500 p-3 text-center text-sm font-semibold text-white ${breakpoint === "default" ? "w-full" : "w-1/2"}`}>
                     Content width
                 </div>
-            </PreviewFrame>
+            </ResponsivePreviewFrame>
         ),
     },
     {
@@ -78,12 +75,12 @@ export const responsiveExamples: ResponsiveExample[] = [
         css: createCodes("display: none;", "display: block;"),
         tailwind: createUtilities("hidden", "block"),
         preview: (breakpoint) => (
-            <PreviewFrame>
+            <ResponsivePreviewFrame>
                 <div className="rounded-lg bg-zinc-700 p-3 text-center text-sm text-white">Always visible</div>
                 {breakpoint !== "default" && (
                     <div className="mt-3 rounded-lg bg-emerald-500 p-3 text-center text-sm font-semibold text-white">Visible from {breakpoint}</div>
                 )}
-            </PreviewFrame>
+            </ResponsivePreviewFrame>
         ),
     },
     {
@@ -93,11 +90,11 @@ export const responsiveExamples: ResponsiveExample[] = [
         css: createCodes("grid-template-columns: repeat(1, minmax(0, 1fr));", "grid-template-columns: repeat(3, minmax(0, 1fr));"),
         tailwind: createUtilities("grid grid-cols-1 gap-2", "grid-cols-3"),
         preview: (breakpoint) => (
-            <PreviewFrame>
+            <ResponsivePreviewFrame>
                 <div className={`grid gap-2 ${breakpoint === "default" ? "grid-cols-1" : "grid-cols-3"}`}>
                     {[1, 2, 3].map((item) => <div key={item} className="rounded-lg bg-violet-500 p-3 text-center text-sm font-semibold text-white">{item}</div>)}
                 </div>
-            </PreviewFrame>
+            </ResponsivePreviewFrame>
         ),
     },
     {
@@ -107,12 +104,12 @@ export const responsiveExamples: ResponsiveExample[] = [
         css: createCodes("flex-direction: column;", "flex-direction: row;"),
         tailwind: createUtilities("flex flex-col gap-2", "flex-row"),
         preview: (breakpoint) => (
-            <PreviewFrame>
+            <ResponsivePreviewFrame>
                 <div className={`flex gap-2 ${breakpoint === "default" ? "flex-col" : "flex-row"}`}>
                     <div className="flex-1 rounded-lg bg-cyan-500 p-3 text-center text-sm font-semibold text-white">Primary</div>
                     <div className="flex-1 rounded-lg bg-zinc-700 p-3 text-center text-sm font-semibold text-white">Secondary</div>
                 </div>
-            </PreviewFrame>
+            </ResponsivePreviewFrame>
         ),
     },
     {
@@ -122,9 +119,9 @@ export const responsiveExamples: ResponsiveExample[] = [
         css: createCodes("padding: 1rem;", "padding: 2rem;"),
         tailwind: createUtilities("p-4", "p-8"),
         preview: (breakpoint) => (
-            <PreviewFrame>
+            <ResponsivePreviewFrame>
                 <div className={`rounded-lg bg-amber-500 text-center text-sm font-semibold text-white ${breakpoint === "default" ? "p-4" : "p-8"}`}>Adaptive padding</div>
-            </PreviewFrame>
+            </ResponsivePreviewFrame>
         ),
     },
     {
@@ -134,9 +131,9 @@ export const responsiveExamples: ResponsiveExample[] = [
         css: createCodes("font-size: 1.5rem;", "font-size: 3rem;"),
         tailwind: createUtilities("text-2xl", "text-5xl"),
         preview: (breakpoint) => (
-            <PreviewFrame>
+            <ResponsivePreviewFrame>
                 <p className={`font-black text-foreground ${breakpoint === "default" ? "text-2xl" : "text-5xl"}`}>Build with confidence</p>
-            </PreviewFrame>
+            </ResponsivePreviewFrame>
         ),
     },
     {
@@ -146,9 +143,9 @@ export const responsiveExamples: ResponsiveExample[] = [
         css: createCodes("width: 100%; height: 10rem;", "width: 50%; height: 16rem;"),
         tailwind: createUtilities("h-40 w-full", "h-64 w-1/2"),
         preview: (breakpoint) => (
-            <PreviewFrame>
+            <ResponsivePreviewFrame>
                 <div className={`rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 ${breakpoint === "default" ? "h-40 w-full" : "h-64 w-1/2"}`} />
-            </PreviewFrame>
+            </ResponsivePreviewFrame>
         ),
     },
     {
@@ -158,12 +155,12 @@ export const responsiveExamples: ResponsiveExample[] = [
         css: createCodes("visibility: visible;", "visibility: hidden;"),
         tailwind: createUtilities("visible", "invisible"),
         preview: (breakpoint) => (
-            <PreviewFrame>
+            <ResponsivePreviewFrame>
                 <div className="flex items-center justify-between rounded-lg bg-rose-500 p-3 text-sm font-semibold text-white">
                     <span>Essential content</span>
                     {breakpoint === "default" ? <span>Visible</span> : <span className="opacity-50">Supporting detail hidden</span>}
                 </div>
-            </PreviewFrame>
+            </ResponsivePreviewFrame>
         ),
     },
 ];
